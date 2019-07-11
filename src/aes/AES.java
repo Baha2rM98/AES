@@ -17,10 +17,16 @@ import java.util.Base64;
 public class AES extends FileManager {
 
     private final String ALGORITHM = "AES/CBC/PKCS5PADDING";
-    private final File ivPath = new File("C:\\Users\\Baha2r\\IdeaProjects\\AES\\src\\assets", "iv.bin");
-    private final File kPath = new File("C:\\Users\\Baha2r\\IdeaProjects\\AES\\src\\assets", "k.bin");
+
+    //give to this iv file path
+    private final File ivPath = new File("C:\\Users\\Baha2r\\IdeaProjects\\AES\\src\\assets", "iv");
+
+    //give to this k file path
+    private final File kPath = new File("C:\\Users\\Baha2r\\IdeaProjects\\AES\\src\\assets", "k");
+
     private SecretKeySpec KEY;
     private IvParameterSpec IV;
+
 
 //    /**
 //     * This constructor is used for generating different Key and ivVector
@@ -45,20 +51,21 @@ public class AES extends FileManager {
 //        IV = new IvParameterSpec(iv);
 //    }
 
+
     /**
      * This constructor is used for preparing Key and ivVector thad are already exist
      **/
     public AES() throws IOException {
         IV = new IvParameterSpec(ivReader().getBytes(StandardCharsets.UTF_8));
-        KEY = new SecretKeySpec(keyReader().getBytes(StandardCharsets.UTF_8), ALGORITHM);
+        KEY = new SecretKeySpec(keyReader().getBytes(StandardCharsets.UTF_8), "AES");
     }
 
-    public String ivReader() throws IOException {
-        return readBinaryFile(ivPath);
+    private String ivReader() throws IOException {
+        return readInnerBinaryFile(ivPath);
     }
 
-    public String keyReader() throws IOException {
-        return readBinaryFile(kPath);
+    private String keyReader() throws IOException {
+        return readInnerBinaryFile(kPath);
     }
 
     public String encryption(String plainText) {
@@ -84,5 +91,6 @@ public class AES extends FileManager {
         }
         return null;
     }
+
 
 }

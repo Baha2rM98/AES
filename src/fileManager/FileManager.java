@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public abstract class FileManager {
 
-   public FileManager() {
+    protected FileManager() {
     }
 
     private File creatFile(File directory, String fileName) throws IOException {
@@ -38,26 +38,18 @@ public abstract class FileManager {
         return file;
     }
 
-    public String readFile(File file) throws FileNotFoundException {
-        Scanner reader = new Scanner(file);
-        StringBuilder textBuilder = new StringBuilder();
-        while (reader.hasNextLine()) {
-            textBuilder.append(reader.nextLine());
-        }
-        return textBuilder.toString();
-    }
-
-    public String readBinaryFile(File file) throws IOException {
+    protected String readInnerBinaryFile(File file) throws IOException {
         FileInputStream fis = new FileInputStream(file);
         ObjectInputStream ois = new ObjectInputStream(fis);
         final int size = ois.available();
-        byte[] buf = new byte[size];
+        byte[] bytes = new byte[size];
         for (int i = 0; i < size; i++) {
-            buf[i] = ois.readByte();
+            bytes[i] = ois.readByte();
         }
+        byte[] buff = CharacterHider.show(bytes);
         ois.close();
         fis.close();
-        return new String(buf);
+        return new String(buff);
     }
 
     public File writeBinaryFile(File directory, String fileName, String text) throws IOException {
@@ -73,6 +65,19 @@ public abstract class FileManager {
         return file;
     }
 
+    public String readBinaryFile(File file) throws IOException {
+        FileInputStream fis = new FileInputStream(file);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        final int size = ois.available();
+        byte[] buff = new byte[size];
+        for (int i = 0; i < size; i++) {
+            buff[i] = ois.readByte();
+        }
+        ois.close();
+        fis.close();
+        return new String(buff);
+    }
+
     public File writeFile(File directory, String fileName, String text) throws IOException {
         File file = creatFile(directory, fileName);
         assert file != null;
@@ -81,6 +86,15 @@ public abstract class FileManager {
         fw.flush();
         fw.close();
         return file;
+    }
+
+    public String readFile(File file) throws FileNotFoundException {
+        Scanner reader = new Scanner(file);
+        StringBuilder textBuilder = new StringBuilder();
+        while (reader.hasNextLine()) {
+            textBuilder.append(reader.nextLine());
+        }
+        return textBuilder.toString();
     }
 
     public void deleteFile(File file) {
