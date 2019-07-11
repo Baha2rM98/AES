@@ -1,3 +1,5 @@
+package aes;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.spec.IvParameterSpec;
@@ -6,19 +8,19 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-class AES {
+public class AES extends  {
 
-    private static final String ALGORITHM = "AES/CBC/PKCS5PADDING";
+    private static final String ALGORITHM = "aes.AES/CBC/PKCS5PADDING";
     private static Key KEY;
     private static IvParameterSpec IV;
 
-    AES() {
+    public AES() {
         final int blockSize = 128;
         final int n = 16;
         SecureRandom keyRand = new SecureRandom();
         KeyGenerator generator = null;
         try {
-            generator = KeyGenerator.getInstance("AES");
+            generator = KeyGenerator.getInstance("aes.AES");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -31,7 +33,7 @@ class AES {
         IV = new IvParameterSpec(iv);
     }
 
-    String encryption(String plainText) {
+   public String encryption(String plainText) {
         try {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, KEY, IV);
@@ -43,7 +45,7 @@ class AES {
         return null;
     }
 
-    String decryption(String cipherText) {
+   public String decryption(String cipherText) {
         try {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, KEY, IV);
