@@ -55,6 +55,8 @@ public abstract class FileManager {
         for (int i = 0; i < size; i++) {
             buf[i] = ois.readByte();
         }
+        ois.close();
+        fis.close();
         return new String(buf);
     }
 

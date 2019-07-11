@@ -1,6 +1,5 @@
 import aes.AES;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -21,8 +20,7 @@ public class AESMain {
 //            String d = aes.decryption(e);
 //            System.out.println(d + "\n");
 //        }
-//        File path = new File("C:\\Users\\Baha2r\\Desktop\\Texts", "k");
-//        String k = aes.readBinaryFile(path);
-//        System.out.println(k);
+        System.out.println(Arrays.toString(aes.ivReader().getBytes()) + "\n" + aes.ivReader().length());
+        System.out.println(Arrays.toString(aes.keyReader().getBytes()) + "\n" + aes.keyReader().length());
     }
 }
