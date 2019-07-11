@@ -3,12 +3,12 @@ package fileManager;
 import java.io.*;
 import java.util.Scanner;
 
-abstract class FileManager {
+public abstract class FileManager {
 
-    FileManager() {
+   public FileManager() {
     }
 
-    private File makeFile(File directory, String fileName) throws IOException {
+    private File creatFile(File directory, String fileName) throws IOException {
         if (!directory.isDirectory()) {
             System.err.println("This is not a directory!");
             return null;
@@ -23,7 +23,7 @@ abstract class FileManager {
         return file;
     }
 
-    private File makeBinaryFile(File directory, String fileName) throws IOException {
+    private File creatBinaryFile(File directory, String fileName) throws IOException {
         if (!directory.isDirectory()) {
             System.err.println("This is not a directory!");
             return null;
@@ -59,7 +59,7 @@ abstract class FileManager {
     }
 
     public File writeBinaryFile(File directory, String fileName, String text) throws IOException {
-        File file = makeBinaryFile(directory, fileName);
+        File file = creatBinaryFile(directory, fileName);
         assert file != null;
         FileOutputStream fos = new FileOutputStream(file);
         ObjectOutputStream os = new ObjectOutputStream(fos);
@@ -72,7 +72,7 @@ abstract class FileManager {
     }
 
     public File writeFile(File directory, String fileName, String text) throws IOException {
-        File file = makeFile(directory, fileName);
+        File file = creatFile(directory, fileName);
         assert file != null;
         FileWriter fw = new FileWriter(file);
         fw.write(text);
