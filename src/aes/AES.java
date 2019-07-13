@@ -56,6 +56,10 @@ public class AES extends FileManager {
      * This constructor is used for preparing Key and ivVector thad are already exist
      **/
     public AES() throws IOException {
+//        ivPath.setReadable(true, true);
+//        kPath.setReadable(true, true);
+        ivPath.setReadOnly();
+        kPath.setReadOnly();
         IV = new IvParameterSpec(ivReader().getBytes(StandardCharsets.UTF_8));
         KEY = new SecretKeySpec(keyReader().getBytes(StandardCharsets.UTF_8), "AES");
     }
