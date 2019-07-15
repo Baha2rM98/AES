@@ -56,8 +56,8 @@ public class AES extends FileManager {
      * This constructor is used for preparing Key and ivVector thad are already exist
      **/
     public AES() throws IOException {
-//        ivPath.setReadable(true, true);
-//        kPath.setReadable(true, true);
+//        ivPath.setReadable(false, true);
+//        kPath.setReadable(false, true);
         ivPath.setReadOnly();
         kPath.setReadOnly();
         IV = new IvParameterSpec(ivReader().getBytes(StandardCharsets.UTF_8));
@@ -96,5 +96,93 @@ public class AES extends FileManager {
         return null;
     }
 
+    public File fileEncryption(File directory, String fileName) throws IOException {
+        if (!directory.isDirectory()) {
+            System.err.println("This is not a directory!");
+            return null;
+        }
+        File file = null;
+        File[] files = directory.listFiles();
+        assert files != null;
+        for (File value : files) {
+            if (value.getName().equals(fileName)) {
+                file = value;
+                break;
+            }
+        }
+        if (file == null) {
+            System.err.println("There is no file with this information in this directory!");
+            return null;
+        }
+        String text;
+        if (isTextFile(file)) {
+            text = readFile(file);
+            if (text.equals("")) {
+                System.err.println("file is empty!");
+                return null;
+            }
+            fileName = "Encrypted_" + fileName;
+            System.out.println("Your file is encrypted now!\n");
+            File EF = writeFile(directory, fileName, encryption(text));
+            EF.setReadOnly();
+            return EF;
+        }
+        if (file.getName().contains(".bin")) {
+            text = readBinaryFile(file);
+            if (text.equals("")) {
+                System.err.println("file is empty!");
+                return null;
+            }
+            fileName = "Encrypted_" + fileName;
+            System.out.println("Your file is encrypted now!\n");
+            File EF = writeBinaryFile(directory, fileName, encryption(text));
+            EF.setReadOnly();
+            return EF;
+        }
+        return null;
+    }
 
+    public File fileDecryption(File directory, String fileName) throws IOException {
+        String tempName = fileName;
+        fileName = "Encrypted_" + fileName;
+        if (!directory.isDirectory()) {
+            System.err.println("This is not a directory!");
+            return null;
+        }
+        File encryptedFile = null;
+        File[] files = directory.listFiles();
+        assert files != null;
+        for (File value : files) {
+            if (value.getName().equals(fileName)) {
+                encryptedFile = value;
+                break;
+            }
+        }
+        if (encryptedFile == null) {
+            System.err.println("There is no file with this information in this directory!");
+            return null;
+        }
+        String encrypted;
+        if (isTextFile(encryptedFile)) {
+            encrypted = readFile(encryptedFile);
+            if (encrypted.equals("")) {
+                System.err.println("file is empty!");
+                return null;
+            }
+            String finalName = "Decrypted_" + tempName;
+            System.out.println("Your file is decrypted now!\n");
+            return writeFile(directory, finalName, decryption(encrypted));
+        }
+        if (isBinaryFile(encryptedFile)) {
+            encrypted = readBinaryFile(encryptedFile);
+            if (encrypted.equals("")) {
+                System.err.println("file is empty!");
+                return null;
+            }
+            String finalName = "Decrypted_" + tempName;
+            System.out.println("Your file is decrypted now!\n");
+            return writeFile(directory, finalName, decryption(encrypted));
+        }
+        return null;
+    }
 }
