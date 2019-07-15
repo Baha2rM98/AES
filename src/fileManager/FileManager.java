@@ -105,4 +105,12 @@ public abstract class FileManager {
         if (file.exists())
             file.delete();
     }
+
+    protected boolean isTextFile(File file) {
+        return file.getName().contains(".txt");
+    }
+
+    protected boolean isBinaryFile(File file) {
+        return file.getName().contains(".bin");
+    }
 }
