@@ -1,4 +1,4 @@
-package aes;
+package AES;
 
 import fileManager.FileManager;
 
@@ -18,11 +18,11 @@ public class AES extends FileManager {
 
     private final String ALGORITHM = "AES/CBC/PKCS5PADDING";
 
-    //give to this iv file path
-    private final File ivPath = new File("C:\\Users\\Baha2r\\IdeaProjects\\AES\\src\\assets", "iv");
+    //iv file path
+    private final File ivPath = new File("assets/iv");
 
-    //give to this k file path
-    private final File kPath = new File("C:\\Users\\Baha2r\\IdeaProjects\\AES\\src\\assets", "k");
+    //k file path
+    private final File kPath = new File("assets/k");
 
     private SecretKeySpec KEY;
     private IvParameterSpec IV;
