@@ -1,4 +1,4 @@
-import aes.AES;
+import AES.AES;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,7 @@ public class AESMain {
     public static void main(String[] args) throws IOException {
         Scanner scn = new Scanner(System.in);
         AES aes = new AES();
-        System.out.println("Welcome!\n\n");
+        System.out.println("Welcome!\nThis program uses for encrypting files!\n");
         System.out.println("For using string mod enter 1, For using file mod enter 2, For exit enter 0.");
         String ans = scn.next();
         if (ans.equals("1")) {
@@ -28,7 +28,7 @@ public class AESMain {
         }
         if (ans.equals("2")) {
             while (true) {
-                System.out.println("Enter the path of your file's directory (for example C:\\User\\...)\nEnter q or Q for exit");
+                System.out.println("Enter the path of your file's directory (for example C:\\\\User\\\\...)\nEnter q or Q for exit");
                 String way = scn.next();
                 if (way.equals("q") || way.equals("Q")) {
                     System.out.println("Terminated!");
