@@ -3,7 +3,7 @@ package fileManager;
 import java.io.*;
 import java.util.Scanner;
 
-public abstract class FileManager {
+public abstract class FileManager implements Serializable {
 
     protected FileManager() {
     }
@@ -52,7 +52,7 @@ public abstract class FileManager {
         return new String(buff);
     }
 
-    public File writeBinaryFile(File directory, String fileName, String text) throws IOException {
+    protected File writeBinaryFile(File directory, String fileName, String text) throws IOException {
         File file = creatBinaryFile(directory, fileName);
         assert file != null;
         FileOutputStream fos = new FileOutputStream(file);
@@ -65,7 +65,7 @@ public abstract class FileManager {
         return file;
     }
 
-    public String readBinaryFile(File file) throws IOException {
+    protected String readBinaryFile(File file) throws IOException {
         FileInputStream fis = new FileInputStream(file);
         ObjectInputStream ois = new ObjectInputStream(fis);
         final int size = ois.available();
@@ -78,7 +78,7 @@ public abstract class FileManager {
         return new String(buff);
     }
 
-    public File writeFile(File directory, String fileName, String text) throws IOException {
+    protected File writeFile(File directory, String fileName, String text) throws IOException {
         File file = creatFile(directory, fileName);
         assert file != null;
         FileWriter fw = new FileWriter(file);
@@ -88,7 +88,7 @@ public abstract class FileManager {
         return file;
     }
 
-    public String readFile(File file) throws FileNotFoundException {
+    protected String readFile(File file) throws FileNotFoundException {
         Scanner reader = new Scanner(file);
         StringBuilder textBuilder = new StringBuilder();
         while (reader.hasNextLine()) {
@@ -97,14 +97,14 @@ public abstract class FileManager {
         return textBuilder.toString();
     }
 
-    public void deleteFile(File file) {
-        if (!file.exists()) {
-            System.err.println("There is nothing to delete!");
-            return;
-        }
-        if (file.exists())
-            file.delete();
-    }
+//    public void deleteFile(File file) {
+//        if (!file.exists()) {
+//            System.err.println("There is nothing to delete!");
+//            return;
+//        }
+//        if (file.exists())
+//            file.delete();
+//    }
 
     protected boolean isTextFile(File file) {
         return file.getName().contains(".txt");
