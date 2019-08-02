@@ -19,10 +19,12 @@ public class AES extends FileManager {
     private final String ALGORITHM = "AES/CBC/PKCS5PADDING";
 
     //iv file path
-    private final File ivPath = new File("assets/iv");
+    private final File ivPathDirectory = new File("assets");
+    private final File ivPath = new File(ivPathDirectory.getAbsolutePath(), "iv");
 
     //k file path
-    private final File kPath = new File("assets/k");
+    private final File kPathDirectory = new File("assets");
+    private final File kPath = new File(kPathDirectory.getAbsolutePath(), "iv");
 
     private SecretKeySpec KEY;
     private IvParameterSpec IV;
