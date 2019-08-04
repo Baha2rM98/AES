@@ -24,7 +24,7 @@ public class AES extends FileManager {
 
     //k file path
     private final File kPathDirectory = new File("assets");
-    private final File kPath = new File(kPathDirectory.getAbsolutePath(), "iv");
+    private final File kPath = new File(kPathDirectory.getAbsolutePath(), "k");
 
     private SecretKeySpec KEY;
     private IvParameterSpec IV;
@@ -55,7 +55,7 @@ public class AES extends FileManager {
 
 
     /**
-     * This constructor is used for preparing Key and ivVector thad are already exist
+     * This constructor is used for prepared Key and ivVector thad are already exist
      **/
     public AES() throws IOException {
         ivPath.setReadOnly();
@@ -72,7 +72,7 @@ public class AES extends FileManager {
         return readInnerBinaryFile(kPath);
     }
 
-    public String encryption(String plainText) {
+    private String encryption(String plainText) {
         try {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, KEY, IV);
@@ -84,7 +84,7 @@ public class AES extends FileManager {
         return null;
     }
 
-    public String decryption(String cipherText) {
+    private String decryption(String cipherText) {
         try {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, KEY, IV);
