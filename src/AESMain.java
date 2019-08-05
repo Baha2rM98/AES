@@ -1,4 +1,4 @@
-import AES.AES;
+import aes.AES;
 
 import java.io.File;
 import java.io.IOException;

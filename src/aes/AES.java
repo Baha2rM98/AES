@@ -1,6 +1,6 @@
-package AES;
+package aes;
 
-import fileManager.FileManager;
+import filemanager.FileManager;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -16,7 +16,7 @@ import java.util.Base64;
 
 public class AES extends FileManager {
 
-    private final String ALGORITHM = "AES/CBC/PKCS5PADDING";
+    private final String ALGORITHM = "aes/CBC/PKCS5PADDING";
 
     //iv file path
     private final File ivPathDirectory = new File("assets");
@@ -33,14 +33,14 @@ public class AES extends FileManager {
 //    /**
 //     * This constructor is used for generating different Key and ivVector
 //     **/
-//    public AES() {
+//    public aes() {
 //        super();
 //        final int blockSize = 128;
 //        final int n = 16;
 //        SecureRandom keyRand = new SecureRandom();
 //        KeyGenerator generator = null;
 //        try {
-//            generator = KeyGenerator.getInstance("AES");
+//            generator = KeyGenerator.getInstance("aes");
 //        } catch (NoSuchAlgorithmException e) {
 //            e.printStackTrace();
 //        }
@@ -61,7 +61,7 @@ public class AES extends FileManager {
         ivPath.setReadOnly();
         kPath.setReadOnly();
         IV = new IvParameterSpec(ivReader().getBytes(StandardCharsets.UTF_8));
-        KEY = new SecretKeySpec(keyReader().getBytes(StandardCharsets.UTF_8), "AES");
+        KEY = new SecretKeySpec(keyReader().getBytes(StandardCharsets.UTF_8), "aes");
     }
 
     private String ivReader() throws IOException {

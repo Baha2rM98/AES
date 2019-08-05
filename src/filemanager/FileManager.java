@@ -1,4 +1,4 @@
-package fileManager;
+package filemanager;
 
 import java.io.*;
 import java.util.Scanner;

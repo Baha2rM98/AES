@@ -1,4 +1,4 @@
-package fileManager;
+package filemanager;
 
 abstract class CharacterHider {
     private static final byte MUL = -1;
