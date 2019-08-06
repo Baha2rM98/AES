@@ -16,7 +16,7 @@ import java.util.Base64;
 
 public class AES extends FileManager {
 
-    private final String ALGORITHM = "aes/CBC/PKCS5PADDING";
+    private final String ALGORITHM = "AES/CBC/PKCS5PADDING";
 
     //iv file path
     private final File ivPathDirectory = new File("assets");
