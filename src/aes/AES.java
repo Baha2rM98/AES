@@ -143,8 +143,8 @@ public class AES extends FileManager {
     }
 
     public File fileDecryption(File directory, String fileName) throws IOException {
-        String tempName = fileName;
-        fileName = "Encrypted_" + fileName;
+//        String tempName = fileName;
+//        fileName = "Encrypted_" + fileName;
         if (!directory.isDirectory()) {
             System.err.println("This is not a directory!");
             return null;
@@ -169,7 +169,8 @@ public class AES extends FileManager {
                 System.err.println("file is empty!");
                 return null;
             }
-            String finalName = "Decrypted_" + tempName;
+//            String finalName = "Decrypted_" + tempName;
+            String finalName = "Decrypted_" + fileName;
             System.out.println("Your file is decrypted now!\n");
             return writeFile(directory, finalName, decryption(encrypted));
         }
@@ -179,7 +180,8 @@ public class AES extends FileManager {
                 System.err.println("file is empty!");
                 return null;
             }
-            String finalName = "Decrypted_" + tempName;
+//            String finalName = "Decrypted_" + tempName;
+            String finalName = "Decrypted_" + fileName;
             System.out.println("Your file is decrypted now!\n");
             return writeFile(directory, finalName, decryption(encrypted));
         }
