@@ -180,6 +180,9 @@ public class AES extends AESFileManager {
                 System.err.println("file is empty!");
                 return null;
             }
+            StringBuilder nameBuilder = new StringBuilder(fileName);
+            nameBuilder.delete(0, 10);
+            fileName = nameBuilder.toString();
             String finalName = "Decrypted_" + fileName;
             System.out.println("Your file is decrypted now!\n");
             return writeFile(directory, finalName, decryption(encrypted));
