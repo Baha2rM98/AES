@@ -1,4 +1,4 @@
-package filemanager;
+package aesfilemanager;
 
 abstract class CharacterHider {
     private static final byte MUL = -1;

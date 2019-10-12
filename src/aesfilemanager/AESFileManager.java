@@ -1,11 +1,11 @@
-package filemanager;
+package aesfilemanager;
 
 import java.io.*;
 import java.util.Scanner;
 
-public abstract class FileManager {
+public abstract class AESFileManager {
 
-    protected FileManager() {
+    protected AESFileManager() {
     }
 
     private File creatFile(File directory, String fileName) throws IOException {

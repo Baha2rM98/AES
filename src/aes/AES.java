@@ -1,6 +1,6 @@
 package aes;
 
-import filemanager.FileManager;
+import aesfilemanager.AESFileManager;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -14,7 +14,7 @@ import java.util.Base64;
  * @author Baha2r
  **/
 
-public class AES extends FileManager {
+public class AES extends AESFileManager {
 
     private final String ALGORITHM = "AES/CBC/PKCS5PADDING";
 
@@ -170,6 +170,9 @@ public class AES extends FileManager {
                 return null;
             }
 //            String finalName = "Decrypted_" + tempName;
+            StringBuilder nameBuilder = new StringBuilder(fileName);
+            nameBuilder.delete(0, 10);
+            fileName = nameBuilder.toString();
             String finalName = "Decrypted_" + fileName;
             System.out.println("Your file is decrypted now!\n");
             return writeFile(directory, finalName, decryption(encrypted));
