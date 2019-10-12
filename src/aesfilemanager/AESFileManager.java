@@ -97,15 +97,6 @@ public abstract class AESFileManager {
         return textBuilder.toString();
     }
 
-//    public void deleteFile(File file) {
-//        if (!file.exists()) {
-//            System.err.println("There is nothing to delete!");
-//            return;
-//        }
-//        if (file.exists())
-//            file.delete();
-//    }
-
     protected boolean isTextFile(File file) {
         return file.getName().contains(".txt");
     }
