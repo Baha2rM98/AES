@@ -8,6 +8,10 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.nio.file.attribute.FileOwnerAttributeView;
+import java.nio.file.attribute.UserPrincipal;
+import java.nio.file.attribute.UserPrincipalLookupService;
 import java.util.Base64;
 
 /**
@@ -125,6 +129,12 @@ public class AES extends AESFileManager {
             System.out.println("Your file is encrypted now!\n");
             File EF = writeFile(directory, fileName, encryption(text));
             EF.setReadOnly();
+            Path path = Paths.get(EF.getAbsolutePath());
+            FileOwnerAttributeView foav = Files.getFileAttributeView(path, FileOwnerAttributeView.class);
+            FileSystem fs = FileSystems.getDefault();
+            UserPrincipalLookupService upls = fs.getUserPrincipalLookupService();
+            UserPrincipal newOwner = upls.lookupPrincipalByName("root");
+            foav.setOwner(newOwner);
             return EF;
         }
         if (file.getName().contains(".bin")) {
@@ -137,6 +147,12 @@ public class AES extends AESFileManager {
             System.out.println("Your file is encrypted now!\n");
             File EF = writeBinaryFile(directory, fileName, encryption(text));
             EF.setReadOnly();
+            Path path = Paths.get(EF.getAbsolutePath());
+            FileOwnerAttributeView foav = Files.getFileAttributeView(path, FileOwnerAttributeView.class);
+            FileSystem fs = FileSystems.getDefault();
+            UserPrincipalLookupService upls = fs.getUserPrincipalLookupService();
+            UserPrincipal newOwner = upls.lookupPrincipalByName("root");
+            foav.setOwner(newOwner);
             return EF;
         }
         return null;
