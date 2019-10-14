@@ -33,6 +33,9 @@ public class AES extends AESFileManager {
     private SecretKeySpec KEY;
     private IvParameterSpec IV;
 
+    private final String LINUX = "linux";
+    private File savedDirectory;
+
 
 //    /**
 //     * This constructor is used for generating different Key and ivVector
@@ -66,6 +69,10 @@ public class AES extends AESFileManager {
         kPath.setReadOnly();
         IV = new IvParameterSpec(ivReader().getBytes(StandardCharsets.UTF_8));
         KEY = new SecretKeySpec(keyReader().getBytes(StandardCharsets.UTF_8), "aes");
+    }
+
+    private String os() {
+        return System.getProperty("os.name").toLowerCase();
     }
 
     private String ivReader() throws IOException {
@@ -127,15 +134,20 @@ public class AES extends AESFileManager {
             }
             fileName = "Encrypted_" + fileName;
             System.out.println("Your file is encrypted now!\n");
-            File EF = writeFile(directory, fileName, encryption(text));
-            EF.setReadOnly();
-            Path path = Paths.get(EF.getAbsolutePath());
-            FileOwnerAttributeView foav = Files.getFileAttributeView(path, FileOwnerAttributeView.class);
-            FileSystem fs = FileSystems.getDefault();
-            UserPrincipalLookupService upls = fs.getUserPrincipalLookupService();
-            UserPrincipal newOwner = upls.lookupPrincipalByName("root");
-            foav.setOwner(newOwner);
-            return EF;
+            if (os().equals(LINUX)) {
+                savedDirectory = new File("/notes");
+                if (!savedDirectory.exists())
+                    savedDirectory.mkdirs();
+                File EF = writeFile(savedDirectory, fileName, encryption(text));
+                EF.setReadOnly();
+                Path path = Paths.get(EF.getAbsolutePath());
+                FileOwnerAttributeView foav = Files.getFileAttributeView(path, FileOwnerAttributeView.class);
+                FileSystem fs = FileSystems.getDefault();
+                UserPrincipalLookupService upls = fs.getUserPrincipalLookupService();
+                UserPrincipal newOwner = upls.lookupPrincipalByName("root");
+                foav.setOwner(newOwner);
+                return EF;
+            }
         }
         if (file.getName().contains(".bin")) {
             text = readBinaryFile(file);
@@ -145,15 +157,20 @@ public class AES extends AESFileManager {
             }
             fileName = "Encrypted_" + fileName;
             System.out.println("Your file is encrypted now!\n");
-            File EF = writeBinaryFile(directory, fileName, encryption(text));
-            EF.setReadOnly();
-            Path path = Paths.get(EF.getAbsolutePath());
-            FileOwnerAttributeView foav = Files.getFileAttributeView(path, FileOwnerAttributeView.class);
-            FileSystem fs = FileSystems.getDefault();
-            UserPrincipalLookupService upls = fs.getUserPrincipalLookupService();
-            UserPrincipal newOwner = upls.lookupPrincipalByName("root");
-            foav.setOwner(newOwner);
-            return EF;
+            if (os().equals(LINUX)) {
+                savedDirectory = new File("/notes");
+                if (!savedDirectory.exists())
+                    savedDirectory.mkdirs();
+                File EF = writeFile(savedDirectory, fileName, encryption(text));
+                EF.setReadOnly();
+                Path path = Paths.get(EF.getAbsolutePath());
+                FileOwnerAttributeView foav = Files.getFileAttributeView(path, FileOwnerAttributeView.class);
+                FileSystem fs = FileSystems.getDefault();
+                UserPrincipalLookupService upls = fs.getUserPrincipalLookupService();
+                UserPrincipal newOwner = upls.lookupPrincipalByName("root");
+                foav.setOwner(newOwner);
+                return EF;
+            }
         }
         return null;
     }
@@ -188,7 +205,17 @@ public class AES extends AESFileManager {
             fileName = nameBuilder.toString();
             String finalName = "Decrypted_" + fileName;
             System.out.println("Your file is decrypted now!\n");
-            return writeFile(directory, finalName, decryption(encrypted));
+            if (os().equals(LINUX)) {
+                StringBuilder sb = new StringBuilder(System.clearProperty("user.dir"));
+                sb.delete(13, sb.length());
+                String path = sb.toString() + "Desktop";
+                savedDirectory = new File(path);
+                if (!savedDirectory.exists())
+                    savedDirectory.mkdirs();
+                File DF = writeFile(savedDirectory, finalName, decryption(encrypted));
+                DF.setReadable(true);
+                return DF;
+            }
         }
         if (isBinaryFile(encryptedFile)) {
             encrypted = readBinaryFile(encryptedFile);
@@ -201,7 +228,17 @@ public class AES extends AESFileManager {
             fileName = nameBuilder.toString();
             String finalName = "Decrypted_" + fileName;
             System.out.println("Your file is decrypted now!\n");
-            return writeFile(directory, finalName, decryption(encrypted));
+            if (os().equals(LINUX)) {
+                StringBuilder sb = new StringBuilder(System.clearProperty("user.dir"));
+                sb.delete(13, sb.length());
+                String path = sb.toString() + "Desktop";
+                savedDirectory = new File(path);
+                if (!savedDirectory.exists())
+                    savedDirectory.mkdirs();
+                File DF = writeFile(savedDirectory, finalName, decryption(encrypted));
+                DF.setReadable(true);
+                return DF;
+            }
         }
         return null;
     }
